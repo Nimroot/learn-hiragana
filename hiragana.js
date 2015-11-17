@@ -42,8 +42,10 @@ $(document).ready(function() {
             }
 
             if (!($('#qanswer').val() in hiragana[lvl])) {
-                $('#qfeedback').text('Incorrect answer. Try again...');
+                $('#qfeedback').text('Wrong answer. Try again...');
                 $('#qfeedback').fadeIn(500).delay(500).fadeOut(500);
+                $('#qanswer').addClass('qbanswer');
+                $('#qanswer').removeClass('qanswer');
 
                 bad_answers += 1;
                 good_ans_in_row = 0;
@@ -68,15 +70,23 @@ $(document).ready(function() {
                     $('#qfeedback').fadeIn(400).delay(200).fadeOut(400);
                 }
 
-                $('#qanswer').hide();
-                $('#qcontinue').show();
-                $('#qcontinue').focus();
+                $('#qanswer').addClass('qganswer');
+                $('#qanswer').removeClass('qanswer');
+                $('#qanswer').removeClass('qbanswer').fadeOut(1000, function(){
+                    $('#qanswer').hide();
+                    $('#qcontinue').show();
+                    $('#qcontinue').focus();
+                    $('#qanswer').removeClass('qganswer');
+                    $('#qanswer').addClass('qanswer');
+                });
 
                 $('#qscore').text(good_answers + ' | ' + bad_answers);
 
             } else {
                 $('#qfeedback').text('Wrong answer. Try again...');
                 $('#qfeedback').fadeIn(400).delay(300).fadeOut(400);
+                $('#qanswer').addClass('qbanswer');
+                $('#qanswer').removeClass('qanswer');
 
                 bad_answers += 1;
                 good_ans_in_row = 0;
