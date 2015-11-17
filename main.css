@@ -1,0 +1,32 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    padding: 2%;
+}
+
+#main {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 200px;
+    text-align: center;
+    border-width: 0 1px 0 1px;
+    border-style: solid;
+    border-color: #CCC;
+}
+
+#qchar {
+    margin-top: -30px;
+    margin-bottom: -20px;
+    font-size: 800%;
+}
+
+#qfeedback {
+    display: none;
+}
+
+#qcontinue {
+    display: none;
+}
