@@ -70,6 +70,7 @@ $(document).ready(function() {
                     $('#qfeedback').fadeIn(400).delay(200).fadeOut(400);
                 }
 
+                $('#qanswer').prop('disabled', true);
                 $('#qanswer').addClass('qganswer');
                 $('#qanswer').removeClass('qanswer');
                 $('#qanswer').removeClass('qbanswer').fadeOut(1000, function(){
@@ -110,6 +111,7 @@ $(document).ready(function() {
 
         $('#qchar').text(hiragana[lvl][rand_key]);
         $('#qcontinue').hide();
+        $('#qanswer').prop('disabled', false);
         $('#qanswer').val('');
         $('#qanswer').show();
         $('#qanswer').focus();
