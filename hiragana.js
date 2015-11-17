@@ -68,7 +68,6 @@ $(document).ready(function() {
                     $('#qfeedback').fadeIn(400).delay(200).fadeOut(400);
                 }
 
-                $('#qanswer').val('');
                 $('#qanswer').hide();
                 $('#qcontinue').show();
                 $('#qcontinue').focus();
@@ -101,6 +100,7 @@ $(document).ready(function() {
 
         $('#qchar').text(hiragana[lvl][rand_key]);
         $('#qcontinue').hide();
+        $('#qanswer').val('');
         $('#qanswer').show();
         $('#qanswer').focus();
     });
