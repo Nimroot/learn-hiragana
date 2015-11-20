@@ -1,11 +1,14 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-
 html, body {
     margin: 0;
     padding: 0;
     background-color: #FCFCFC;
     color: #333;
+    font-size: 13px;
     font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    padding: 2%;
 }
 
 ul {
@@ -23,7 +26,7 @@ li:last-of-type {
 input[type=button] {
     border-width: 1px;
     border-style: solid;
-    font-size: 15px;
+    font-size: 13px;
     text-align: center;
     background-color: #FFF;
     width: 300px;
@@ -34,10 +37,13 @@ input[type=button]:hover, input[type=button]:focus {
     border-color: #49A9DB;
 }
 
+input[type=button]::-moz-focus-inner {
+    border: 0;
+}
+
 input[type=text] {
     border-width: 1px;
     border-style: solid;
-    font-size: 20px;
     width: 300px;
     height: 80px;
     text-align: center;
@@ -60,35 +66,27 @@ input[type=text] {
     border-color: #0fcf58;
 }
 
-p {
-    padding: 2%;
-}
-
-.main-menu {
-    width: 500px;
-    margin: 0 auto;
-    margin-top: 100px;
-    text-align: center;
-    border-width: 0 1px 0 1px;
-    border-style: solid;
-    border-color: #CCC;
-}
-
-.hiragana-to-romaji {
+.page {
     display: none;
     width: 500px;
     margin: 0 auto;
     margin-top: 100px;
     text-align: center;
-    border-width: 0 1px 0 1px;
-    border-style: solid;
-    border-color: #CCC;
+}
+
+.options p:last-of-type {
+    font-size: 10px;
+    text-align: right;
+}
+
+.romaji input[type=text] {
+    font-size: 20px;
 }
 
 #qchar {
     margin-top: -30px;
     margin-bottom: -20px;
-    font-size: 800%;
+    font-size: 150px;
     color: #000;
 }
 

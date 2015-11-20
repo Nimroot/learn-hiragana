@@ -5,29 +5,47 @@
     <title>Hiragana practice</title>
     <script src="jquery-2.1.4.min.js"></script>
     <script src="hiragana.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans" />
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="hiragana.css" />
+    <link rel="stylesheet" href="msgbox.css" />
 </head>
 <body>
-    <div class="main-menu" id="main-menu">
+    <div class="page" id="main-menu">
         <ul>
-            <li>
+            <li id="romaji-btn">
                 <input type="button" value="Practice Hiragana to Romaji" />
             </li>
-            <li>
+            <li id="hiragana-btn">
                 <input type="button" value="Practice Romaji to Hiragana" />
             </li>
-            <li>
+            <li id="options-btn">
                 <input type="button" value="Options" />
             </li>
-            <li>
+            <li id="credits-btn">
                 <input type="button" value="Credits" />
             </li>
+            <li id="achieve-btn">
+                <input type="button" value="Achievements" />
+            </li>
         </ul>
-
     </div>
 
-    <div class="hiragana-to-romaji" id="hiragana-to-romaji">
-        <p>Your score: <span id="qscore">0 / 0</span></p>
+    <div class="page options" id="options">
+        <div class="msgbox-warning">Browser storage is not supported. Options will not work.</div>
+        <p>
+            <input type="checkbox" /> Store offline data
+        </p>
+        <p>
+            <input type="button" value="Back to main menu" />
+        </p>
+
+        <p>Version: <span>n/a</span></p>
+    </div>
+
+    <div class="page" id="romaji">
+        <p>Your score: <span id="qscore">0 | 0</span></p>
 
         <p>How to write</p>
         <p id="qchar">Please enable scripts</p>
@@ -38,11 +56,6 @@
                 placeholder="Type your answer..." />
             <input type="button" id="qcontinue" value="Continue" />
         </p>
-        <div style="height: 30px;">
-            <p id="qfeedback">
-                This website requires modern browser to work properly.
-            </p>
-        </div>
     </div>
 </body>
 </html>
