@@ -6,6 +6,18 @@ Object.size = function(obj) {
     return size;
 };
 
+var Page = function(name) {
+    this.name = name;
+};
+
+Page.prototype.displayMessage = function(message, type) {
+    if (!type) type = 'info';
+    $('#' + this.name).append('<div class="msgbox-' + type + '">' +
+        message + '</div>');
+    $('.msgbox-' + type).fadeIn('slow').delay(500).
+    fadeOut('slow', function() { $('.msgbox-' + type).remove(); });
+};
+
 var hiragana = [
     // Level 0
     { a: 'あ', e: 'え', i: 'い', o: 'お', u: 'う', n: 'ん' },
@@ -35,36 +47,67 @@ var hiragana = [
     { ga: 'が', gi: 'ぎ', gu: 'ぐ', ge: 'げ', go: 'ご' }
 ];
 
+var messages = {
+    no_ans: 'Type in something first...',
+    bad_ans: 'Wrong answer, try again.'
+};
+
 var lvl = 0;
 var good_answers = 0;
 var bad_answers = 0;
 var good_ans_in_row = 0;
+var storage_supported = false;
+if (typeof(Storage) !== 'undefined') storage_supported = true;
 
 $(document).ready(function() {
-    $("#main-menu li").first().click(function() {
-        $("#main-menu").fadeOut(500).delay(500, function() {
+    var romaji = new Page('romaji');
+
+    $('#main-menu').fadeIn('slow');
+    $('#romaji-btn').click(function() {
+        $('#main-menu').fadeOut('slow', function() {
             var rand_key_num = Math.floor(Math.random() *
                 Object.size(hiragana[lvl]));
             var rand_key = Object.keys(hiragana[lvl])[rand_key_num];
 
-            $("#hiragana-to-romaji").fadeIn(500);
+            $('#romaji').fadeIn('slow');
+            $('#qanswer').val('').prop('disabled', false).focus();
             $('#qchar').text(hiragana[lvl][rand_key]);
-            $('#qanswer').focus();
+        });
+    });
+
+    $('#options-btn').click(function() {
+        $('#main-menu').fadeOut('slow', function() {
+            $('#options').fadeIn('slow');
+        });
+    });
+
+    if (storage_supported) {
+        if (localStorage.version !== '0.0.1α') {
+            // upgrade code if necessary
+            localStorage.version = '0.0.1α';
+        }
+
+        $('input[type=checkbox]').first().prop('disabled', false);
+        $('#options span').last().text(localStorage.version);
+    } else {
+        $('input[type=checkbox]').first().prop('disabled', true);
+    }
+
+    $('#options input').last().click(function() {
+        $('#options').fadeOut('slow', function() {
+            $('#main-menu').fadeIn('slow');
         });
     });
 
     $(document).on('keypress', '#qanswer', function(e) {
-        if(e.keyCode == 13) {
-            if($('#qanswer').val() === '') {
-                $('#qfeedback').text('Type in something first.');
-                $('#qfeedback').fadeIn(400).delay(200).fadeOut(400);
-
+        if (e.keyCode == 13) {
+            if ($('#qanswer').val() === '') {
+                romaji.displayMessage(messages.no_ans, 'warning');
                 return false;
             }
 
             if (!($('#qanswer').val() in hiragana[lvl])) {
-                $('#qfeedback').text('Wrong answer. Try again...').fadeIn(500)
-                .delay(500).fadeOut(500);
+                romaji.displayMessage(messages.bad_ans, 'error');
                 $('#qanswer').addClass('qbanswer').removeClass('qanswer');
 
                 bad_answers += 1;
@@ -82,17 +125,16 @@ $(document).ready(function() {
                     lvl += 1;
                     good_ans_in_row = 0;
 
-                    $('#qfeedback').text('Level up!').fadeIn(500).delay(500)
-                    .fadeOut(500);
+                    romaji.displayMessage('Level up! You are now at level ' +
+                    lvl.toString() + '.', 'success');
 
                 } else {
-                    $('#qfeedback').text('Correct answer, keep going!')
-                    .fadeIn(400).delay(200).fadeOut(400);
+                    romaji.displayMessage('Good job, keep going!', 'success');
                 }
 
                 $('#qanswer').prop('disabled', true).addClass('qganswer')
                 .removeClass('qanswer').removeClass('qbanswer')
-                .fadeOut(1000, function(){
+                .fadeOut(1800, function(){
                     $('#qcontinue').show().focus();
                     $('#qanswer').hide().removeClass('qganswer')
                     .addClass('qanswer');
@@ -101,8 +143,7 @@ $(document).ready(function() {
                 $('#qscore').text(good_answers + ' | ' + bad_answers);
 
             } else {
-                $('#qfeedback').text('Wrong answer. Try again...').fadeIn(400)
-                .delay(300).fadeOut(400);
+                romaji.displayMessage(messages.bad_ans, 'error');
                 $('#qanswer').addClass('qbanswer').removeClass('qanswer');
 
                 bad_answers += 1;
